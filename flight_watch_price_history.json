@@ -72,6 +72,10 @@
     {
       "id": "run_1k7952t",
       "at": "2026-02-16T18:41:05.147Z"
+    },
+    {
+      "id": "run_3a99jd",
+      "at": "2026-02-16T21:35:21.490Z"
     }
   ],
   "by_pair": {
@@ -245,6 +249,13 @@
           "price": 681,
           "top_flights_item_count": 5,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 681,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -370,6 +381,13 @@
           "price": 568,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 568,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -485,6 +503,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 569,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 569,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -613,6 +638,13 @@
           "price": 680,
           "top_flights_item_count": 5,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 680,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -731,6 +763,13 @@
           "price": 665,
           "top_flights_item_count": 5,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 665,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -839,6 +878,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 676,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 676,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -960,6 +1006,13 @@
           "price": 565,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 565,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -1075,6 +1128,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 560,
+          "top_flights_item_count": 3,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 560,
           "top_flights_item_count": 3,
           "status": "ok"
@@ -1196,6 +1256,13 @@
           "price": 560,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 560,
+          "top_flights_item_count": 4,
+          "status": "ok"
         }
       ]
     },
@@ -1311,6 +1378,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 560,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 560,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -1432,6 +1506,13 @@
           "price": 679,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 679,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -1550,6 +1631,13 @@
           "price": 834,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 834,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -1665,6 +1753,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 660,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 660,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -1786,6 +1881,13 @@
           "price": 562,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 562,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -1901,6 +2003,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 500,
+          "top_flights_item_count": 4,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 500,
           "top_flights_item_count": 4,
           "status": "ok"
@@ -2022,6 +2131,13 @@
           "price": 560,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 560,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -2139,6 +2255,13 @@
           "at": "2026-02-16T18:41:05.147Z",
           "price": 772,
           "top_flights_item_count": 4,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 779,
+          "top_flights_item_count": 5,
           "status": "ok"
         }
       ]
@@ -2258,6 +2381,13 @@
           "price": 1293,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 1349,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -2373,6 +2503,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 1333,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 1333,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -2494,6 +2631,13 @@
           "price": 1138,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 1137,
+          "top_flights_item_count": 4,
+          "status": "ok"
         }
       ]
     },
@@ -2612,6 +2756,13 @@
           "price": 571,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 571,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -2727,6 +2878,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 500,
+          "top_flights_item_count": 4,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 500,
           "top_flights_item_count": 4,
           "status": "ok"
@@ -2848,6 +3006,13 @@
           "price": 575,
           "top_flights_item_count": 5,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 575,
+          "top_flights_item_count": 5,
+          "status": "ok"
         }
       ]
     },
@@ -2965,6 +3130,13 @@
           "at": "2026-02-16T18:41:05.147Z",
           "price": 756,
           "top_flights_item_count": 4,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 806,
+          "top_flights_item_count": 3,
           "status": "ok"
         }
       ]
@@ -3084,6 +3256,13 @@
           "price": 1256,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 1276,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -3202,6 +3381,13 @@
           "price": 1494,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 1606,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -3317,6 +3503,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 1022,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 1022,
           "top_flights_item_count": 5,
           "status": "ok"
@@ -3438,6 +3631,13 @@
           "price": 837,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 837,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -3556,6 +3756,13 @@
           "price": 576,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 597,
+          "top_flights_item_count": 4,
+          "status": "ok"
         }
       ]
     },
@@ -3671,6 +3878,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 587,
+          "top_flights_item_count": 3,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 587,
           "top_flights_item_count": 3,
           "status": "ok"
@@ -3792,6 +4006,13 @@
           "price": 759,
           "top_flights_item_count": 3,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 759,
+          "top_flights_item_count": 3,
+          "status": "ok"
         }
       ]
     },
@@ -3907,6 +4128,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 1110,
+          "top_flights_item_count": 3,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 1110,
           "top_flights_item_count": 3,
           "status": "ok"
@@ -4028,6 +4256,13 @@
           "price": 1339,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 1339,
+          "top_flights_item_count": 4,
+          "status": "ok"
         }
       ]
     },
@@ -4143,6 +4378,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 1082,
+          "top_flights_item_count": 3,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 1082,
           "top_flights_item_count": 3,
           "status": "ok"
@@ -4264,6 +4506,13 @@
           "price": 842,
           "top_flights_item_count": 4,
           "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
+          "price": 842,
+          "top_flights_item_count": 4,
+          "status": "ok"
         }
       ]
     },
@@ -4288,6 +4537,13 @@
         {
           "run_id": "run_1k7952t",
           "at": "2026-02-16T18:41:05.147Z",
+          "price": 646,
+          "top_flights_item_count": 5,
+          "status": "ok"
+        },
+        {
+          "run_id": "run_3a99jd",
+          "at": "2026-02-16T21:35:21.490Z",
           "price": 646,
           "top_flights_item_count": 5,
           "status": "ok"
