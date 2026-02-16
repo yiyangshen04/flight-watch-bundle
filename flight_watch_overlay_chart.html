@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flight Watch One Glance</title>
+  <style>
+    :root {
+      --bg: #f6f9fc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --line: #1e293b;
+      --up: #dc2626;
+      --down: #16a34a;
+      --flat: #64748b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Manrope", "Avenir Next", "PingFang SC", "Noto Sans SC", sans-serif;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .chart-card {
+      margin-top: 12px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 8px 0 0;
+      font-size: clamp(31px, 4.7vw, 46px);
+      line-height: 1.04;
+      letter-spacing: 0.1px;
+    }
+
+    .subline {
+      margin: 8px 0 0;
+      color: #1e293b;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .kpi-row {
+      margin-top: 11px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .kpi {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px;
+      background: #fff;
+    }
+
+    .kpi-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      margin: 4px 0 0;
+      font-size: clamp(20px, 3.3vw, 29px);
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chips {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .up {
+      color: var(--up);
+      border-color: rgba(220, 38, 38, 0.35);
+      background: rgba(254, 242, 242, 0.95);
+    }
+
+    .down {
+      color: var(--down);
+      border-color: rgba(22, 163, 74, 0.35);
+      background: rgba(240, 253, 244, 0.95);
+    }
+
+    .flat {
+      color: var(--flat);
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .updated-line {
+      margin: 10px 0 0;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chart-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .trend-wrap {
+      position: relative;
+      margin-top: 8px;
+    }
+
+    .trend-svg {
+      width: 100%;
+      height: 220px;
+      display: block;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+    }
+
+    .hover-panel {
+      position: absolute;
+      width: 292px;
+      padding: 9px 10px;
+      left: 10px;
+      top: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.13);
+      backdrop-filter: blur(1.5px);
+      max-height: min(72vh, 600px);
+      overflow-y: auto;
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .hover-panel.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hover-title {
+      margin: 0;
+      font-size: 12px;
+      color: #334155;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hover-price {
+      margin: 4px 0 0;
+      font-size: 18px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: #0f172a;
+    }
+
+    .hover-pills {
+      margin-top: 7px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .hover-pill {
+      border: 1px solid #dbe4ef;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.1;
+      background: #f8fafc;
+      color: #334155;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hover-mini {
+      width: 100%;
+      height: 88px;
+      display: block;
+      margin-top: 6px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .hover-meta {
+      margin: 6px 0 0;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hover-note {
+      margin: 5px 0 0;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hover-history-list {
+      margin-top: 6px;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 5px 6px;
+    }
+
+    .hover-history-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 6px;
+      align-items: center;
+      padding: 2px 0;
+      font-size: 10.5px;
+      color: #334155;
+      font-variant-numeric: tabular-nums;
+      border-bottom: 1px dashed #dbe4ef;
+    }
+
+    .hover-history-item:last-child {
+      border-bottom: none;
+    }
+
+    .hover-history-run {
+      color: #475569;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hover-history-price {
+      color: #0f172a;
+      font-weight: 800;
+    }
+
+    .hover-history-delta {
+      font-weight: 800;
+      min-width: 40px;
+      text-align: right;
+      color: #64748b;
+    }
+
+    .hover-history-delta.up {
+      color: var(--up);
+    }
+
+    .hover-history-delta.down {
+      color: var(--down);
+    }
+
+    .axis-row {
+      margin-top: 6px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .axis-row span:nth-child(2) { color: #0f172a; }
+
+    .note {
+      margin: 6px 0 0;
+      color: #1e293b;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .kpi-row { grid-template-columns: 1fr; }
+      .trend-svg { height: 240px; }
+      .hover-panel {
+        position: static;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+        margin-top: 8px;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <p class="eyebrow">CHI to ROM / PAR to CHI · Fixed 16-day stay</p>
+      <h1 id="headline">-</h1>
+      <p class="subline" id="subline">-</p>
+      <div class="kpi-row">
+        <div class="kpi">
+          <p class="kpi-label">目标日 03-12</p>
+          <p class="kpi-value" id="targetPrice">-</p>
+        </div>
+        <div class="kpi">
+          <p class="kpi-label">区间中位</p>
+          <p class="kpi-value" id="medianPrice">-</p>
+        </div>
+        <div class="kpi">
+          <p class="kpi-label">区间最低</p>
+          <p class="kpi-value" id="minPrice">-</p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip" id="deltaLast">较上次 -</span>
+        <span class="chip" id="deltaFirst">较首轮 -</span>
+        <span class="chip flat" id="bestMove">改期可省 -</span>
+      </div>
+      <p class="updated-line" id="lastUpdatedLine">上次更新时间：-</p>
+    </section>
+
+    <section class="card chart-card">
+      <p class="chart-title">价格趋势（越高越贵）</p>
+      <div class="trend-wrap" id="trendWrap">
+        <svg class="trend-svg" id="trendSvg" viewBox="0 0 860 220" preserveAspectRatio="none" role="img" aria-label="价格趋势线"></svg>
+        <aside class="hover-panel" id="hoverPanel" aria-live="polite">
+          <p class="hover-title" id="hoverDate">-</p>
+          <p class="hover-price" id="hoverPrice">-</p>
+          <div class="hover-pills">
+            <span class="hover-pill flat" id="hoverDeltaLast">较上轮 -</span>
+            <span class="hover-pill flat" id="hoverDeltaFirst">较首轮 -</span>
+          </div>
+          <svg class="hover-mini" id="hoverMini" viewBox="0 0 212 86" preserveAspectRatio="none" role="img" aria-label="当日历史价格变化"></svg>
+          <p class="hover-meta" id="hoverMeta">历史轮次 -</p>
+          <p class="hover-note" id="hoverNote">悬停任一点查看该日完整历史（按轮次累计）。</p>
+          <div class="hover-history-list" id="hoverHistoryList"></div>
+        </aside>
+      </div>
+      <div class="axis-row">
+        <span id="axisStart">-</span>
+        <span id="axisTarget">-</span>
+        <span id="axisEnd">-</span>
+      </div>
+      <p class="note" id="noteLine">-</p>
+    </section>
+  </main>
+
+  <script>
+    const rows = [{"departure_date":"2026-02-15","return_date":"2026-03-03","baseline_price_usd":542,"previous_price_usd":1377,"top_min_usd":1377,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":835,"top_flights_item_count":0,"status":"carry_forward"},{"departure_date":"2026-02-16","return_date":"2026-03-04","baseline_price_usd":574,"previous_price_usd":657,"top_min_usd":657,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":83,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-02-17","return_date":"2026-03-05","baseline_price_usd":568,"previous_price_usd":568,"top_min_usd":568,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-02-18","return_date":"2026-03-06","baseline_price_usd":542,"previous_price_usd":569,"top_min_usd":569,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":27,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-02-19","return_date":"2026-03-07","baseline_price_usd":665,"previous_price_usd":680,"top_min_usd":680,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":15,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-02-20","return_date":"2026-03-08","baseline_price_usd":552,"previous_price_usd":665,"top_min_usd":665,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":113,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-02-21","return_date":"2026-03-09","baseline_price_usd":660,"previous_price_usd":676,"top_min_usd":676,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":16,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-02-22","return_date":"2026-03-10","baseline_price_usd":560,"previous_price_usd":560,"top_min_usd":560,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-02-23","return_date":"2026-03-11","baseline_price_usd":560,"previous_price_usd":560,"top_min_usd":560,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-02-24","return_date":"2026-03-12","baseline_price_usd":554,"previous_price_usd":560,"top_min_usd":560,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":6,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-02-25","return_date":"2026-03-13","baseline_price_usd":560,"previous_price_usd":560,"top_min_usd":560,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-02-26","return_date":"2026-03-14","baseline_price_usd":679,"previous_price_usd":679,"top_min_usd":679,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-02-27","return_date":"2026-03-15","baseline_price_usd":742,"previous_price_usd":834,"top_min_usd":834,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":92,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-02-28","return_date":"2026-03-16","baseline_price_usd":660,"previous_price_usd":660,"top_min_usd":660,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-03-01","return_date":"2026-03-17","baseline_price_usd":562,"previous_price_usd":562,"top_min_usd":562,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-02","return_date":"2026-03-18","baseline_price_usd":500,"previous_price_usd":500,"top_min_usd":500,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-03","return_date":"2026-03-19","baseline_price_usd":560,"previous_price_usd":560,"top_min_usd":560,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-04","return_date":"2026-03-20","baseline_price_usd":688,"previous_price_usd":789,"top_min_usd":789,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":101,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-05","return_date":"2026-03-21","baseline_price_usd":1511,"previous_price_usd":1308,"top_min_usd":1308,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":-203,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-03-06","return_date":"2026-03-22","baseline_price_usd":832,"previous_price_usd":1333,"top_min_usd":1333,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":501,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-07","return_date":"2026-03-23","baseline_price_usd":782,"previous_price_usd":1132,"top_min_usd":1132,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":350,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-08","return_date":"2026-03-24","baseline_price_usd":571,"previous_price_usd":571,"top_min_usd":571,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-09","return_date":"2026-03-25","baseline_price_usd":500,"previous_price_usd":500,"top_min_usd":500,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-10","return_date":"2026-03-26","baseline_price_usd":575,"previous_price_usd":575,"top_min_usd":575,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-11","return_date":"2026-03-27","baseline_price_usd":635,"previous_price_usd":848,"top_min_usd":848,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":213,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-12","return_date":"2026-03-28","baseline_price_usd":1191,"previous_price_usd":1266,"top_min_usd":1266,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":75,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-13","return_date":"2026-03-29","baseline_price_usd":1266,"previous_price_usd":1494,"top_min_usd":1494,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":228,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-14","return_date":"2026-03-30","baseline_price_usd":1013,"previous_price_usd":967,"top_min_usd":967,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":-46,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-15","return_date":"2026-03-31","baseline_price_usd":685,"previous_price_usd":837,"top_min_usd":837,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":152,"top_flights_item_count":5,"status":"ok"},{"departure_date":"2026-03-16","return_date":"2026-04-01","baseline_price_usd":560,"previous_price_usd":626,"top_min_usd":626,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":66,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-17","return_date":"2026-04-02","baseline_price_usd":616,"previous_price_usd":587,"top_min_usd":587,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":-29,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-18","return_date":"2026-04-03","baseline_price_usd":681,"previous_price_usd":809,"top_min_usd":809,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":128,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-19","return_date":"2026-04-04","baseline_price_usd":1110,"previous_price_usd":1110,"top_min_usd":1110,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":0,"top_flights_item_count":3,"status":"ok"},{"departure_date":"2026-03-20","return_date":"2026-04-05","baseline_price_usd":947,"previous_price_usd":1339,"top_min_usd":1339,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":392,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-21","return_date":"2026-04-06","baseline_price_usd":950,"previous_price_usd":1061,"top_min_usd":1061,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":111,"top_flights_item_count":4,"status":"ok"},{"departure_date":"2026-03-22","return_date":"2026-04-07","baseline_price_usd":594,"previous_price_usd":842,"top_min_usd":842,"delta_vs_last_round_usd":0,"delta_vs_first_round_usd":248,"top_flights_item_count":3,"status":"ok"}];
+
+    const generatedAtIso = '2026-02-16T05:59:11.766Z';
+    const targetDate = '2026-03-12';
+    const values = rows.map(function(r) { return r.top_min_usd; });
+
+    const headlineEl = document.getElementById('headline');
+    const sublineEl = document.getElementById('subline');
+    const targetPriceEl = document.getElementById('targetPrice');
+    const medianPriceEl = document.getElementById('medianPrice');
+    const minPriceEl = document.getElementById('minPrice');
+    const deltaLastEl = document.getElementById('deltaLast');
+    const deltaFirstEl = document.getElementById('deltaFirst');
+    const bestMoveEl = document.getElementById('bestMove');
+    const lastUpdatedLineEl = document.getElementById('lastUpdatedLine');
+    const trendWrapEl = document.getElementById('trendWrap');
+    const trendSvgEl = document.getElementById('trendSvg');
+    const axisStartEl = document.getElementById('axisStart');
+    const axisTargetEl = document.getElementById('axisTarget');
+    const axisEndEl = document.getElementById('axisEnd');
+    const noteLineEl = document.getElementById('noteLine');
+    const hoverPanelEl = document.getElementById('hoverPanel');
+    const hoverDateEl = document.getElementById('hoverDate');
+    const hoverPriceEl = document.getElementById('hoverPrice');
+    const hoverDeltaLastEl = document.getElementById('hoverDeltaLast');
+    const hoverDeltaFirstEl = document.getElementById('hoverDeltaFirst');
+    const hoverMiniEl = document.getElementById('hoverMini');
+    const hoverMetaEl = document.getElementById('hoverMeta');
+    const hoverNoteEl = document.getElementById('hoverNote');
+    const hoverHistoryListEl = document.getElementById('hoverHistoryList');
+
+    const HISTORY_STORAGE_KEY = 'flight_watch_price_history_v1';
+    const HISTORY_JSON_URL = 'flight_watch_price_history.json';
+    const HISTORY_MAX_RUNS = 240;
+    let historyCtx = null;
+
+    function fmtUsd(v) {
+      return '$' + Math.round(v).toLocaleString('en-US');
+    }
+
+    function fmtSignedUsd(v) {
+      const n = Math.round(v);
+      if (n > 0) return '+$' + n.toLocaleString('en-US');
+      if (n < 0) return '-$' + Math.abs(n).toLocaleString('en-US');
+      return '$0';
+    }
+
+    function fmtIsoToLocal(isoString) {
+      const d = new Date(isoString || '');
+      if (Number.isNaN(d.getTime())) return '未知';
+      return d.toLocaleString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+    }
+
+    function median(arr) {
+      const sorted = arr.slice().sort(function(a, b) { return a - b; });
+      const mid = Math.floor(sorted.length / 2);
+      if (sorted.length % 2) return sorted[mid];
+      return (sorted[mid - 1] + sorted[mid]) / 2;
+    }
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function svgEl(tag, attrs) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      Object.keys(attrs).forEach(function(key) {
+        el.setAttribute(key, String(attrs[key]));
+      });
+      return el;
+    }
+
+    function setChip(el, label, delta) {
+      el.className = 'chip';
+      if (delta > 0) el.classList.add('up');
+      else if (delta < 0) el.classList.add('down');
+      else el.classList.add('flat');
+      el.textContent = label + ' ' + fmtSignedUsd(delta);
+    }
+
+    function setHoverPill(el, label, delta) {
+      el.className = 'hover-pill';
+      if (delta > 0) el.classList.add('up');
+      else if (delta < 0) el.classList.add('down');
+      else el.classList.add('flat');
+      el.textContent = label + ' ' + fmtSignedUsd(delta);
+    }
+
+    function hashText(text) {
+      let h = 2166136261;
+      for (let i = 0; i < text.length; i += 1) {
+        h ^= text.charCodeAt(i);
+        h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+      }
+      return (h >>> 0).toString(36);
+    }
+
+    function makePairKey(row) {
+      return row.departure_date + '|' + row.return_date;
+    }
+
+    function emptyHistoryStore() {
+      return { version: 1, runs: [], by_pair: {} };
+    }
+
+    function normalizeHistoryStore(raw) {
+      const out = emptyHistoryStore();
+      if (!raw || typeof raw !== 'object') return out;
+
+      if (Array.isArray(raw.runs)) {
+        out.runs = raw.runs
+          .filter(function(r) { return r && typeof r.id === 'string'; })
+          .map(function(r) {
+            return {
+              id: r.id,
+              at: typeof r.at === 'string' ? r.at : ''
+            };
+          });
+      }
+
+      const srcByPair = raw.by_pair && typeof raw.by_pair === 'object' ? raw.by_pair : {};
+      Object.keys(srcByPair).forEach(function(key) {
+        const entry = srcByPair[key];
+        if (!entry || typeof entry !== 'object') return;
+        const samples = Array.isArray(entry.samples) ? entry.samples : [];
+        out.by_pair[key] = {
+          departure_date: typeof entry.departure_date === 'string' ? entry.departure_date : '',
+          return_date: typeof entry.return_date === 'string' ? entry.return_date : '',
+          samples: samples
+            .filter(function(s) { return s && typeof s.run_id === 'string'; })
+            .map(function(s) {
+              return {
+                run_id: s.run_id,
+                at: typeof s.at === 'string' ? s.at : '',
+                price: Number.isFinite(Number(s.price)) ? Number(s.price) : null,
+                top_flights_item_count: Number.isFinite(Number(s.top_flights_item_count))
+                  ? Number(s.top_flights_item_count)
+                  : null,
+                status: typeof s.status === 'string' ? s.status : 'missing'
+              };
+            })
+            .filter(function(s) { return s.price !== null; })
+        };
+      });
+
+      return out;
+    }
+
+    function mergeHistoryStores(baseRaw, incomingRaw) {
+      const merged = normalizeHistoryStore(baseRaw);
+      const incoming = normalizeHistoryStore(incomingRaw);
+
+      const runById = {};
+      merged.runs.forEach(function(run) { runById[run.id] = run; });
+      incoming.runs.forEach(function(run) {
+        if (!runById[run.id]) {
+          merged.runs.push(run);
+          runById[run.id] = run;
+        } else if (!runById[run.id].at && run.at) {
+          runById[run.id].at = run.at;
+        }
+      });
+
+      Object.keys(incoming.by_pair).forEach(function(key) {
+        const source = incoming.by_pair[key];
+        if (!merged.by_pair[key]) {
+          merged.by_pair[key] = {
+            departure_date: source.departure_date,
+            return_date: source.return_date,
+            samples: []
+          };
+        }
+        const target = merged.by_pair[key];
+        if (!target.departure_date) target.departure_date = source.departure_date;
+        if (!target.return_date) target.return_date = source.return_date;
+        if (!Array.isArray(target.samples)) target.samples = [];
+        const seen = {};
+        target.samples.forEach(function(sample) { seen[sample.run_id] = true; });
+        source.samples.forEach(function(sample) {
+          if (!seen[sample.run_id]) {
+            target.samples.push(sample);
+            seen[sample.run_id] = true;
+          }
+        });
+      });
+
+      return merged;
+    }
+
+    function loadLocalHistoryStore() {
+      try {
+        const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
+        if (!raw) return emptyHistoryStore();
+        const parsed = JSON.parse(raw);
+        return normalizeHistoryStore(parsed);
+      } catch (err) {
+        return emptyHistoryStore();
+      }
+    }
+
+    async function loadDiskHistoryStore() {
+      try {
+        const response = await fetch(HISTORY_JSON_URL + '?v=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) return emptyHistoryStore();
+        const parsed = await response.json();
+        return normalizeHistoryStore(parsed);
+      } catch (err) {
+        return emptyHistoryStore();
+      }
+    }
+
+    function loadHistoryStore(seedStore) {
+      const diskStore = normalizeHistoryStore(seedStore);
+      if (diskStore.runs.length > 0) return diskStore;
+      return loadLocalHistoryStore();
+    }
+
+    function saveHistoryStore(store) {
+      try {
+        window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(store));
+      } catch (err) {
+        // ignore storage failures
+      }
+    }
+
+    function formatRunStamp(isoString, fallbackIndex) {
+      const d = new Date(isoString);
+      if (Number.isNaN(d.getTime())) return String(fallbackIndex + 1);
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mi = String(d.getMinutes()).padStart(2, '0');
+      return mm + '-' + dd + ' ' + hh + ':' + mi;
+    }
+
+    function ingestRoundHistory(allRows, seedStore) {
+      const store = loadHistoryStore(seedStore);
+      const shouldAppendCurrent = store.runs.length === 0;
+      let runId = '';
+      let run = null;
+
+      if (shouldAppendCurrent) {
+        const modifiedAt = new Date(document.lastModified);
+        const runAt = Number.isNaN(modifiedAt.getTime())
+          ? new Date().toISOString()
+          : modifiedAt.toISOString();
+        runId = 'run_' + hashText(runAt + '|rows=' + allRows.length);
+
+        run = store.runs.find(function(r) { return r.id === runId; });
+        if (!run) {
+          run = {
+            id: runId,
+            at: runAt
+          };
+          store.runs.push(run);
+        }
+
+        allRows.forEach(function(row) {
+          const key = makePairKey(row);
+          if (!store.by_pair[key]) {
+            store.by_pair[key] = {
+              departure_date: row.departure_date,
+              return_date: row.return_date,
+              samples: []
+            };
+          }
+          const entry = store.by_pair[key];
+          if (!Array.isArray(entry.samples)) entry.samples = [];
+          const exists = entry.samples.some(function(s) { return s.run_id === runId; });
+          if (!exists) {
+            entry.samples.push({
+              run_id: runId,
+              at: run.at,
+              price: row.top_min_usd,
+              top_flights_item_count: row.top_flights_item_count,
+              status: row.status
+            });
+          }
+        });
+      }
+
+      if (store.runs.length > HISTORY_MAX_RUNS) {
+        const keepRuns = store.runs.slice(store.runs.length - HISTORY_MAX_RUNS);
+        const allow = {};
+        keepRuns.forEach(function(r) { allow[r.id] = true; });
+        store.runs = keepRuns;
+        Object.keys(store.by_pair).forEach(function(key) {
+          const entry = store.by_pair[key];
+          if (!entry || !Array.isArray(entry.samples)) return;
+          entry.samples = entry.samples.filter(function(s) { return allow[s.run_id]; });
+        });
+      }
+
+      const runOrder = {};
+      store.runs.forEach(function(r, idx) { runOrder[r.id] = idx; });
+      Object.keys(store.by_pair).forEach(function(key) {
+        const entry = store.by_pair[key];
+        if (!entry || !Array.isArray(entry.samples)) return;
+        entry.samples.sort(function(a, b) {
+          const ai = Object.prototype.hasOwnProperty.call(runOrder, a.run_id) ? runOrder[a.run_id] : 0;
+          const bi = Object.prototype.hasOwnProperty.call(runOrder, b.run_id) ? runOrder[b.run_id] : 0;
+          return ai - bi;
+        });
+      });
+
+      saveHistoryStore(store);
+      if (!run) {
+        run = store.runs.length > 0
+          ? store.runs[store.runs.length - 1]
+          : { id: '', at: '' };
+        runId = run.id;
+      }
+      return {
+        store: store,
+        run_id: runId,
+        run_at: run.at
+      };
+    }
+
+    function buildFallbackHistory(row) {
+      return [
+        { detail: '1', label: '初始', price: row.baseline_price_usd },
+        { detail: '2', label: '上次', price: row.previous_price_usd },
+        { detail: '3', label: '本次', price: row.top_min_usd }
+      ];
+    }
+
+    function getHistoryForRow(row) {
+      const key = makePairKey(row);
+      const entry = historyCtx && historyCtx.store && historyCtx.store.by_pair
+        ? historyCtx.store.by_pair[key]
+        : null;
+      const samples = entry && Array.isArray(entry.samples) ? entry.samples : [];
+      if (samples.length > 0) {
+        return samples.map(function(sample, idx) {
+          return {
+            detail: String(idx + 1),
+            label: formatRunStamp(sample.at, idx),
+            price: sample.price
+          };
+        });
+      }
+      return buildFallbackHistory(row);
+    }
+
+    function computeDeltasFromHistory(row, historySeries) {
+      const series = Array.isArray(historySeries) ? historySeries : [];
+      if (series.length > 0) {
+        const current = Number(series[series.length - 1].price);
+        const first = Number(series[0].price);
+        const prev = Number(series[Math.max(0, series.length - 2)].price);
+        const deltaFirst = Number.isFinite(current) && Number.isFinite(first) ? current - first : row.delta_vs_first_round_usd;
+        const deltaLast = Number.isFinite(current) && Number.isFinite(prev) ? current - prev : row.delta_vs_last_round_usd;
+        return {
+          deltaFirst: Number.isFinite(deltaFirst) ? deltaFirst : 0,
+          deltaLast: Number.isFinite(deltaLast) ? deltaLast : 0
+        };
+      }
+      return {
+        deltaFirst: Number.isFinite(row.delta_vs_first_round_usd) ? row.delta_vs_first_round_usd : 0,
+        deltaLast: Number.isFinite(row.delta_vs_last_round_usd) ? row.delta_vs_last_round_usd : 0
+      };
+    }
+
+    function autoSizeHoverHistoryList(historySeries) {
+      const count = historySeries.length;
+      const desired = Math.max(92, Math.min(360, 6 + count * 20));
+      hoverHistoryListEl.style.maxHeight = desired + 'px';
+    }
+
+    function describeHistoryShape(historySeries) {
+      if (!historySeries.length) return '暂无历史数据';
+      let upSteps = 0;
+      let downSteps = 0;
+      for (let i = 1; i < historySeries.length; i += 1) {
+        const d = historySeries[i].price - historySeries[i - 1].price;
+        if (d > 0) upSteps += 1;
+        else if (d < 0) downSteps += 1;
+      }
+      const net = historySeries[historySeries.length - 1].price - historySeries[0].price;
+      if (upSteps > 0 && downSteps === 0) return '持续上涨';
+      if (downSteps > 0 && upSteps === 0) return '持续下跌';
+      if (Math.abs(net) <= 5) return '整体震荡持平';
+      return net > 0 ? '震荡上行' : '震荡下行';
+    }
+
+    function renderHoverMini(historySeries) {
+      const W = 212;
+      const H = 86;
+      const pad = { l: 16, r: 10, t: 8, b: 20 };
+      const vals = historySeries.map(function(item) { return item.price; });
+      const minV = Math.min.apply(null, vals);
+      const maxV = Math.max.apply(null, vals);
+      const floor = Math.floor(minV * 0.94 / 10) * 10;
+      const ceil = Math.ceil(maxV * 1.06 / 10) * 10;
+      const range = Math.max(1, ceil - floor);
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+      const denom = Math.max(1, vals.length - 1);
+
+      function mx(i) { return pad.l + (i / denom) * innerW; }
+      function my(v) { return pad.t + ((ceil - v) / range) * innerH; }
+
+      hoverMiniEl.innerHTML = '';
+      hoverMiniEl.appendChild(svgEl('line', {
+        x1: pad.l, y1: my(floor), x2: pad.l + innerW, y2: my(floor),
+        stroke: '#dbe4ef', 'stroke-width': 1
+      }));
+      hoverMiniEl.appendChild(svgEl('line', {
+        x1: pad.l, y1: my(ceil), x2: pad.l + innerW, y2: my(ceil),
+        stroke: '#dbe4ef', 'stroke-width': 1
+      }));
+
+      const pathD = vals.map(function(v, i) {
+        return (i === 0 ? 'M ' : 'L ') + mx(i).toFixed(2) + ' ' + my(v).toFixed(2);
+      }).join(' ');
+      hoverMiniEl.appendChild(svgEl('path', {
+        d: pathD,
+        fill: 'none',
+        stroke: '#1e293b',
+        'stroke-width': 2.1,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }));
+
+      const labelIdx = vals.length <= 5
+        ? vals.map(function(_, i) { return i; })
+        : [0, Math.floor((vals.length - 1) / 2), vals.length - 1];
+      const showLabel = {};
+      labelIdx.forEach(function(i) { showLabel[i] = true; });
+
+      vals.forEach(function(v, i) {
+        const prev = i > 0 ? vals[i - 1] : v;
+        const delta = v - prev;
+        let color = '#94a3b8';
+        if (i === vals.length - 1) {
+          color = delta > 0 ? '#dc2626' : (delta < 0 ? '#16a34a' : '#334155');
+        } else if (i > 0) {
+          color = delta > 0 ? '#fb7185' : (delta < 0 ? '#34d399' : '#94a3b8');
+        }
+        hoverMiniEl.appendChild(svgEl('circle', {
+          cx: mx(i).toFixed(2),
+          cy: my(v).toFixed(2),
+          r: i === vals.length - 1 ? 3.7 : 3.0,
+          fill: color,
+          stroke: '#ffffff',
+          'stroke-width': 1.2
+        }));
+        if (showLabel[i]) {
+          hoverMiniEl.appendChild(svgEl('text', {
+            x: mx(i).toFixed(2),
+            y: (H - 4).toFixed(2),
+            'text-anchor': 'middle',
+            fill: '#64748b',
+            'font-size': 9.5,
+            'font-weight': 700
+          })).textContent = historySeries[i].detail;
+        }
+      });
+    }
+
+    function renderHoverHistoryList(historySeries) {
+      hoverHistoryListEl.innerHTML = '';
+      historySeries.forEach(function(point, idx) {
+        const delta = idx === 0 ? null : point.price - historySeries[idx - 1].price;
+        const rowEl = document.createElement('div');
+        rowEl.className = 'hover-history-item';
+
+        const runEl = document.createElement('span');
+        runEl.className = 'hover-history-run';
+        runEl.textContent = point.detail + ' · ' + point.label;
+        rowEl.appendChild(runEl);
+
+        const priceEl = document.createElement('span');
+        priceEl.className = 'hover-history-price';
+        priceEl.textContent = fmtUsd(point.price);
+        rowEl.appendChild(priceEl);
+
+        const deltaEl = document.createElement('span');
+        deltaEl.className = 'hover-history-delta';
+        if (delta !== null) {
+          if (delta > 0) deltaEl.classList.add('up');
+          else if (delta < 0) deltaEl.classList.add('down');
+          deltaEl.textContent = fmtSignedUsd(delta);
+        } else {
+          deltaEl.textContent = '--';
+        }
+        rowEl.appendChild(deltaEl);
+
+        hoverHistoryListEl.appendChild(rowEl);
+      });
+    }
+
+    function pointColor(v, q33, q66) {
+      if (v <= q33) return '#16a34a';
+      if (v > q66) return '#dc2626';
+      return '#f59e0b';
+    }
+
+    function renderSummary() {
+      const target = rows.find(function(r) { return r.departure_date === targetDate; }) || rows[0];
+      const minRow = rows.reduce(function(a, b) { return a.top_min_usd < b.top_min_usd ? a : b; });
+      const maxRow = rows.reduce(function(a, b) { return a.top_min_usd > b.top_min_usd ? a : b; });
+      const med = median(values);
+      const gapToMedian = Math.round(target.top_min_usd - med);
+      const gapToMin = Math.max(0, Math.round(target.top_min_usd - minRow.top_min_usd));
+      const cheaperCount = values.filter(function(v) { return v < target.top_min_usd; }).length;
+      const pricierThanPct = Math.round((cheaperCount / values.length) * 100);
+      const sorted = values.slice().sort(function(a, b) { return a - b; });
+      const q33 = sorted[Math.floor((sorted.length - 1) * 0.33)];
+      const q66 = sorted[Math.floor((sorted.length - 1) * 0.66)];
+
+      if (target.top_min_usd >= med * 1.15) {
+        headlineEl.textContent = '目标日偏贵';
+        headlineEl.style.color = 'var(--up)';
+      } else if (target.top_min_usd <= med * 0.9) {
+        headlineEl.textContent = '目标日偏便宜';
+        headlineEl.style.color = 'var(--down)';
+      } else {
+        headlineEl.textContent = '目标日接近常态';
+        headlineEl.style.color = 'var(--line)';
+      }
+
+      if (gapToMedian >= 0) {
+        sublineEl.textContent =
+          '03-12 出发 ' + fmtUsd(target.top_min_usd) + '，比中位高 ' + fmtUsd(gapToMedian) +
+          '，高于 ' + pricierThanPct + '% 日期。';
+      } else {
+        sublineEl.textContent =
+          '03-12 出发 ' + fmtUsd(target.top_min_usd) + '，比中位低 ' + fmtUsd(Math.abs(gapToMedian)) +
+          '。';
+      }
+
+      targetPriceEl.textContent = fmtUsd(target.top_min_usd);
+      targetPriceEl.style.color = gapToMedian > 0 ? 'var(--up)' : (gapToMedian < 0 ? 'var(--down)' : 'var(--line)');
+      medianPriceEl.textContent = fmtUsd(med);
+      medianPriceEl.style.color = 'var(--line)';
+      minPriceEl.textContent = fmtUsd(minRow.top_min_usd);
+      minPriceEl.style.color = 'var(--down)';
+
+      const targetHistory = getHistoryForRow(target);
+      const targetDeltas = computeDeltasFromHistory(target, targetHistory);
+      setChip(deltaLastEl, '较上次', targetDeltas.deltaLast);
+      setChip(deltaFirstEl, '较首轮', targetDeltas.deltaFirst);
+      bestMoveEl.className = 'chip flat';
+      bestMoveEl.textContent = '改到 ' + minRow.departure_date.slice(5) + ' 可省 ' + fmtUsd(gapToMin);
+      lastUpdatedLineEl.textContent = '上次更新时间：' + fmtIsoToLocal(generatedAtIso);
+
+      noteLineEl.textContent =
+        '最低 ' + fmtUsd(minRow.top_min_usd) + '，中位 ' + fmtUsd(med) +
+        '，最高 ' + fmtUsd(maxRow.top_min_usd) + '。悬停任一点可看该日全历史变化。';
+
+      return {
+        target: target,
+        minRow: minRow,
+        maxRow: maxRow,
+        med: med,
+        q33: q33,
+        q66: q66
+      };
+    }
+
+      function renderTrend(summary) {
+      const W = 860;
+      const H = 220;
+      const pad = { l: 48, r: 18, t: 12, b: 28 };
+      const innerW = W - pad.l - pad.r;
+      const innerH = H - pad.t - pad.b;
+      const denom = Math.max(1, rows.length - 1);
+      const floor = Math.floor(summary.minRow.top_min_usd * 0.9 / 10) * 10;
+      const ceil = Math.ceil(summary.maxRow.top_min_usd * 1.05 / 10) * 10;
+      const range = Math.max(1, ceil - floor);
+      const targetIdx = rows.findIndex(function(r) { return r.departure_date === summary.target.departure_date; });
+      let hoverIdx = -1;
+      const hoverSnapThreshold = 18;
+
+      function x(i) { return pad.l + (i / denom) * innerW; }
+      function y(v) { return pad.t + ((ceil - v) / range) * innerH; }
+
+      trendSvgEl.innerHTML = '';
+      trendSvgEl.appendChild(svgEl('rect', {
+        x: pad.l, y: pad.t, width: innerW, height: innerH,
+        fill: '#ffffff', stroke: '#e2e8f0', 'stroke-width': 1
+      }));
+
+      [ceil, summary.med, floor].forEach(function(v, i) {
+        const yy = y(v);
+        trendSvgEl.appendChild(svgEl('line', {
+          x1: pad.l, y1: yy, x2: pad.l + innerW, y2: yy,
+          stroke: '#e2e8f0', 'stroke-width': i === 1 ? 1.2 : 1, 'stroke-dasharray': i === 1 ? '0' : '4 4'
+        }));
+        trendSvgEl.appendChild(svgEl('text', {
+          x: pad.l - 7, y: yy + 4,
+          'text-anchor': 'end', fill: '#64748b', 'font-size': 11, 'font-weight': 700
+        })).textContent = fmtUsd(v);
+      });
+
+      const points = rows.map(function(r, i) { return { x: x(i), y: y(r.top_min_usd), row: r, i: i }; });
+      const lineD = points.map(function(p, i) {
+        return (i === 0 ? 'M ' : 'L ') + p.x.toFixed(2) + ' ' + p.y.toFixed(2);
+      }).join(' ');
+      const areaD = lineD +
+        ' L ' + x(rows.length - 1).toFixed(2) + ' ' + (pad.t + innerH).toFixed(2) +
+        ' L ' + x(0).toFixed(2) + ' ' + (pad.t + innerH).toFixed(2) + ' Z';
+
+      const defs = svgEl('defs', {});
+      const grad = svgEl('linearGradient', { id: 'trendAreaGrad', x1: '0', y1: '0', x2: '0', y2: '1' });
+      grad.appendChild(svgEl('stop', { offset: '0%', 'stop-color': '#93c5fd', 'stop-opacity': 0.35 }));
+      grad.appendChild(svgEl('stop', { offset: '100%', 'stop-color': '#93c5fd', 'stop-opacity': 0.02 }));
+      defs.appendChild(grad);
+      trendSvgEl.appendChild(defs);
+
+      trendSvgEl.appendChild(svgEl('path', {
+        d: areaD,
+        fill: 'url(#trendAreaGrad)'
+      }));
+
+      const linePath = svgEl('path', {
+        d: lineD,
+        fill: 'none',
+        stroke: '#1e293b',
+        'stroke-width': 2.4,
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      });
+      trendSvgEl.appendChild(linePath);
+
+      points.forEach(function(p) {
+        const dot = svgEl('circle', {
+          cx: p.x.toFixed(2),
+          cy: p.y.toFixed(2),
+          r: p.i === targetIdx ? 4.1 : 2.8,
+          fill: pointColor(p.row.top_min_usd, summary.q33, summary.q66),
+          stroke: '#ffffff',
+          'stroke-width': p.i === targetIdx ? 1.7 : 1
+        });
+        dot.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'title'))
+          .textContent = p.row.departure_date.slice(5) + ' -> ' + p.row.return_date.slice(5) + ' · ' + fmtUsd(p.row.top_min_usd);
+        trendSvgEl.appendChild(dot);
+      });
+
+      const hoverGuide = svgEl('line', {
+        x1: 0, y1: pad.t, x2: 0, y2: pad.t + innerH,
+        stroke: '#0f172a', 'stroke-width': 1, 'stroke-opacity': 0.16, 'stroke-dasharray': '4 4'
+      });
+      const hoverFocus = svgEl('circle', {
+        cx: 0, cy: 0, r: 7.2,
+        fill: 'none', stroke: '#0f172a', 'stroke-width': 1.8, 'stroke-opacity': 0
+      });
+      trendSvgEl.appendChild(hoverGuide);
+      trendSvgEl.appendChild(hoverFocus);
+
+      if (targetIdx >= 0) {
+        const tx = x(targetIdx);
+        const ty = y(summary.target.top_min_usd);
+        trendSvgEl.appendChild(svgEl('line', {
+          x1: tx, y1: pad.t, x2: tx, y2: pad.t + innerH,
+          stroke: '#0f172a', 'stroke-width': 1, 'stroke-opacity': 0.22, 'stroke-dasharray': '3 3'
+        }));
+        trendSvgEl.appendChild(svgEl('circle', {
+          cx: tx, cy: ty, r: 6.3, fill: 'none', stroke: '#0f172a', 'stroke-width': 2.1
+        }));
+
+        const labelX = clamp(tx + 8, pad.l + 4, pad.l + innerW - 95);
+        const labelY = clamp(ty - 10, pad.t + 14, pad.t + innerH - 8);
+        trendSvgEl.appendChild(svgEl('text', {
+          x: labelX, y: labelY,
+          fill: '#0f172a', 'font-size': 11, 'font-weight': 800
+        })).textContent = '目标 ' + fmtUsd(summary.target.top_min_usd);
+      }
+
+      function placeHoverPanel(px, py) {
+        const svgRect = trendSvgEl.getBoundingClientRect();
+        const panelW = hoverPanelEl.offsetWidth || 274;
+        const panelH = hoverPanelEl.offsetHeight || 248;
+        let left = px + 14;
+        if (left + panelW > svgRect.width - 4) left = px - panelW - 14;
+        left = clamp(left, 6, Math.max(6, svgRect.width - panelW - 6));
+        let top = py - panelH * 0.5;
+        top = clamp(top, 6, Math.max(6, svgRect.height - panelH - 6));
+        hoverPanelEl.style.left = left.toFixed(1) + 'px';
+        hoverPanelEl.style.top = top.toFixed(1) + 'px';
+      }
+
+      function hideHoverPanel() {
+        hoverPanelEl.classList.remove('show');
+        hoverGuide.setAttribute('stroke-opacity', '0');
+        hoverFocus.setAttribute('stroke-opacity', '0');
+      }
+
+      function updateHover(index, force) {
+        const idx = clamp(Math.round(index), 0, rows.length - 1);
+        if (!force && idx === hoverIdx) return;
+        hoverIdx = idx;
+
+        const p = points[idx];
+        const row = p.row;
+        const svgRect = trendSvgEl.getBoundingClientRect();
+        const px = (p.x / W) * svgRect.width;
+        const py = (p.y / H) * svgRect.height;
+
+        hoverPanelEl.classList.add('show');
+        hoverDateEl.textContent = row.departure_date.slice(5) + ' 出发 / ' + row.return_date.slice(5) + ' 返回';
+        hoverPriceEl.textContent = '本轮最低 ' + fmtUsd(row.top_min_usd);
+        const historySeries = getHistoryForRow(row);
+        const hoverDeltas = computeDeltasFromHistory(row, historySeries);
+        setHoverPill(hoverDeltaLastEl, '较上轮', hoverDeltas.deltaLast);
+        setHoverPill(hoverDeltaFirstEl, '较首轮', hoverDeltas.deltaFirst);
+        autoSizeHoverHistoryList(historySeries);
+        const historyVals = historySeries.map(function(item) { return item.price; });
+        const historyMin = Math.min.apply(null, historyVals);
+        const historyMax = Math.max.apply(null, historyVals);
+        hoverMetaEl.textContent =
+          '历史轮次 ' + historySeries.length + ' · 区间 ' + fmtUsd(historyMin) + ' - ' + fmtUsd(historyMax);
+        hoverNoteEl.textContent = '历史趋势：' + describeHistoryShape(historySeries);
+        renderHoverMini(historySeries);
+        renderHoverHistoryList(historySeries);
+
+        placeHoverPanel(px, py);
+        hoverGuide.setAttribute('x1', p.x.toFixed(2));
+        hoverGuide.setAttribute('x2', p.x.toFixed(2));
+        hoverFocus.setAttribute('cx', p.x.toFixed(2));
+        hoverFocus.setAttribute('cy', p.y.toFixed(2));
+        hoverFocus.setAttribute('stroke-opacity', '0.95');
+      }
+
+      hideHoverPanel();
+
+      trendWrapEl.addEventListener('mousemove', function(evt) {
+        const rect = trendSvgEl.getBoundingClientRect();
+        const sx = evt.clientX - rect.left;
+        const sy = evt.clientY - rect.top;
+        const xSvg = clamp((sx / Math.max(1, rect.width)) * W, 0, W);
+        const ySvg = clamp((sy / Math.max(1, rect.height)) * H, 0, H);
+        const inPlot =
+          xSvg >= pad.l &&
+          xSvg <= pad.l + innerW &&
+          ySvg >= pad.t &&
+          ySvg <= pad.t + innerH;
+
+        if (!inPlot) {
+          hideHoverPanel();
+          return;
+        }
+
+        const ratio = clamp((xSvg - pad.l) / Math.max(1, innerW), 0, 1);
+        const idxFloat = ratio * (rows.length - 1);
+        const idx = clamp(Math.round(idxFloat), 0, rows.length - 1);
+        const distToCurve = Math.abs(ySvg - points[idx].y);
+        if (distToCurve > hoverSnapThreshold) {
+          hideHoverPanel();
+          return;
+        }
+
+        updateHover(idx, false);
+      });
+      trendWrapEl.addEventListener('mouseleave', function() {
+        hideHoverPanel();
+      });
+      trendWrapEl.addEventListener('click', function(evt) {
+        const rect = trendSvgEl.getBoundingClientRect();
+        const sx = evt.clientX - rect.left;
+        const sy = evt.clientY - rect.top;
+        const xSvg = clamp((sx / Math.max(1, rect.width)) * W, 0, W);
+        const ySvg = clamp((sy / Math.max(1, rect.height)) * H, 0, H);
+        const inPlot =
+          xSvg >= pad.l &&
+          xSvg <= pad.l + innerW &&
+          ySvg >= pad.t &&
+          ySvg <= pad.t + innerH;
+        if (!inPlot) {
+          hideHoverPanel();
+          return;
+        }
+        const ratio = clamp((xSvg - pad.l) / Math.max(1, innerW), 0, 1);
+        const idxFloat = ratio * (rows.length - 1);
+        const idx = clamp(Math.round(idxFloat), 0, rows.length - 1);
+        const distToCurve = Math.abs(ySvg - points[idx].y);
+        if (distToCurve > hoverSnapThreshold) {
+          hideHoverPanel();
+          return;
+        }
+        updateHover(idx, true);
+      });
+      window.addEventListener('resize', function() {
+        if (hoverIdx >= 0 && hoverPanelEl.classList.contains('show')) updateHover(hoverIdx, true);
+      });
+
+      axisStartEl.textContent = rows[0].departure_date.slice(5);
+      axisTargetEl.textContent = '目标 ' + summary.target.departure_date.slice(5);
+      axisEndEl.textContent = rows[rows.length - 1].departure_date.slice(5);
+
+      try {
+        const len = linePath.getTotalLength();
+        linePath.style.strokeDasharray = String(len);
+        linePath.style.strokeDashoffset = String(len);
+        requestAnimationFrame(function() {
+          linePath.style.transition = 'stroke-dashoffset 850ms ease-out';
+          linePath.style.strokeDashoffset = '0';
+        });
+      } catch (err) {
+        // ignore animation fallback
+      }
+    }
+
+    async function initPage() {
+      const diskStore = await loadDiskHistoryStore();
+      historyCtx = ingestRoundHistory(rows, diskStore);
+      const summary = renderSummary();
+      renderTrend(summary);
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

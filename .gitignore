@@ -1,0 +1,11 @@
+.DS_Store
+.cloudflared.pid
+.http_server.pid
+.localhostrun.pid
+.cycle.lock/
+cloudflare_url.txt
+localhostrun_url.txt
+logs/
+
+# Local runtime mirror created by launchd installer
+runtime/

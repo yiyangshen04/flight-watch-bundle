@@ -1,0 +1,66 @@
+name: Flight Watch 3h
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flight-watch-3h
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      TRACK_START_DATE: "2026-02-15"
+      WINDOW_DAYS: "36"
+      STAY_DAYS: "16"
+      QUERY_TIMEZONE: "America/Chicago"
+      PER_DATE_MAX_ATTEMPTS: "6"
+      MISSING_MAX_ATTEMPTS: "4"
+      RETRY_BASE_DELAY_MS: "1200"
+      RETRY_MAX_DELAY_MS: "30000"
+      RETRY_JITTER_MS: "650"
+      RATE_LIMIT_COOLDOWN_MS: "90000"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Flight Watch Cycle
+        run: node run_flight_watch_round_http.mjs
+
+      - name: Commit Updated Data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          CHANGED="$(git status --porcelain -- \
+            flight_watch_latest_round.json \
+            flight_watch_latest_round.csv \
+            flight_watch_price_history.json \
+            flight_watch_overlay_chart.html)"
+
+          if [ -z "$CHANGED" ]; then
+            echo "No tracked data changes."
+            exit 0
+          fi
+
+          git add \
+            flight_watch_latest_round.json \
+            flight_watch_latest_round.csv \
+            flight_watch_price_history.json \
+            flight_watch_overlay_chart.html
+
+          git commit -m "chore: update flight watch data [skip ci]"
+          git push
