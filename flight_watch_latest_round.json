@@ -41,7 +41,7 @@
       "top_min_usd": 569,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 27,
-      "top_flights_item_count": 4,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -52,7 +52,7 @@
       "top_min_usd": 680,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 15,
-      "top_flights_item_count": 4,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -63,7 +63,7 @@
       "top_min_usd": 665,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 113,
-      "top_flights_item_count": 5,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
@@ -74,7 +74,7 @@
       "top_min_usd": 676,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 16,
-      "top_flights_item_count": 3,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -96,7 +96,7 @@
       "top_min_usd": 565,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 5,
-      "top_flights_item_count": 3,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -118,7 +118,7 @@
       "top_min_usd": 560,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 0,
-      "top_flights_item_count": 5,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
@@ -136,9 +136,9 @@
       "departure_date": "2026-02-27",
       "return_date": "2026-03-15",
       "baseline_price_usd": 742,
-      "previous_price_usd": 838,
+      "previous_price_usd": 814,
       "top_min_usd": 814,
-      "delta_vs_last_round_usd": -24,
+      "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 72,
       "top_flights_item_count": 5,
       "status": "ok"
@@ -184,7 +184,7 @@
       "top_min_usd": 560,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 0,
-      "top_flights_item_count": 4,
+      "top_flights_item_count": 3,
       "status": "ok"
     },
     {
@@ -195,7 +195,7 @@
       "top_min_usd": 779,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 91,
-      "top_flights_item_count": 3,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
@@ -203,20 +203,20 @@
       "return_date": "2026-03-21",
       "baseline_price_usd": 1511,
       "previous_price_usd": 1349,
-      "top_min_usd": 1349,
-      "delta_vs_last_round_usd": 0,
-      "delta_vs_first_round_usd": -162,
-      "top_flights_item_count": 4,
+      "top_min_usd": 1323,
+      "delta_vs_last_round_usd": -26,
+      "delta_vs_first_round_usd": -188,
+      "top_flights_item_count": 3,
       "status": "ok"
     },
     {
       "departure_date": "2026-03-06",
       "return_date": "2026-03-22",
       "baseline_price_usd": 832,
-      "previous_price_usd": 1642,
-      "top_min_usd": 1628,
-      "delta_vs_last_round_usd": -14,
-      "delta_vs_first_round_usd": 796,
+      "previous_price_usd": 1628,
+      "top_min_usd": 1642,
+      "delta_vs_last_round_usd": 14,
+      "delta_vs_first_round_usd": 810,
       "top_flights_item_count": 1,
       "status": "ok"
     },
@@ -224,11 +224,11 @@
       "departure_date": "2026-03-07",
       "return_date": "2026-03-23",
       "baseline_price_usd": 782,
-      "previous_price_usd": 1161,
-      "top_min_usd": 1106,
-      "delta_vs_last_round_usd": -55,
-      "delta_vs_first_round_usd": 324,
-      "top_flights_item_count": 4,
+      "previous_price_usd": 1106,
+      "top_min_usd": 1153,
+      "delta_vs_last_round_usd": 47,
+      "delta_vs_first_round_usd": 371,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -268,10 +268,10 @@
       "departure_date": "2026-03-11",
       "return_date": "2026-03-27",
       "baseline_price_usd": 635,
-      "previous_price_usd": 987,
-      "top_min_usd": 955,
-      "delta_vs_last_round_usd": -32,
-      "delta_vs_first_round_usd": 320,
+      "previous_price_usd": 955,
+      "top_min_usd": 956,
+      "delta_vs_last_round_usd": 1,
+      "delta_vs_first_round_usd": 321,
       "top_flights_item_count": 3,
       "status": "ok"
     },
@@ -291,9 +291,9 @@
       "return_date": "2026-03-29",
       "baseline_price_usd": 1266,
       "previous_price_usd": 1606,
-      "top_min_usd": 1606,
-      "delta_vs_last_round_usd": 0,
-      "delta_vs_first_round_usd": 340,
+      "top_min_usd": 1374,
+      "delta_vs_last_round_usd": -232,
+      "delta_vs_first_round_usd": 108,
       "top_flights_item_count": 3,
       "status": "ok"
     },
@@ -302,9 +302,9 @@
       "return_date": "2026-03-30",
       "baseline_price_usd": 1013,
       "previous_price_usd": 1042,
-      "top_min_usd": 1042,
-      "delta_vs_last_round_usd": 0,
-      "delta_vs_first_round_usd": 29,
+      "top_min_usd": 1023,
+      "delta_vs_last_round_usd": -19,
+      "delta_vs_first_round_usd": 10,
       "top_flights_item_count": 5,
       "status": "ok"
     },
@@ -313,9 +313,9 @@
       "return_date": "2026-03-31",
       "baseline_price_usd": 685,
       "previous_price_usd": 837,
-      "top_min_usd": 837,
-      "delta_vs_last_round_usd": 0,
-      "delta_vs_first_round_usd": 152,
+      "top_min_usd": 821,
+      "delta_vs_last_round_usd": -16,
+      "delta_vs_first_round_usd": 136,
       "top_flights_item_count": 3,
       "status": "ok"
     },
@@ -323,9 +323,9 @@
       "departure_date": "2026-03-16",
       "return_date": "2026-04-01",
       "baseline_price_usd": 560,
-      "previous_price_usd": 597,
+      "previous_price_usd": 576,
       "top_min_usd": 576,
-      "delta_vs_last_round_usd": -21,
+      "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 16,
       "top_flights_item_count": 4,
       "status": "ok"
@@ -349,7 +349,7 @@
       "top_min_usd": 759,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 78,
-      "top_flights_item_count": 5,
+      "top_flights_item_count": 3,
       "status": "ok"
     },
     {
@@ -360,28 +360,28 @@
       "top_min_usd": 1139,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 29,
-      "top_flights_item_count": 3,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
       "departure_date": "2026-03-20",
       "return_date": "2026-04-05",
       "baseline_price_usd": 947,
-      "previous_price_usd": 1355,
+      "previous_price_usd": 1284,
       "top_min_usd": 1284,
-      "delta_vs_last_round_usd": -71,
+      "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 337,
-      "top_flights_item_count": 5,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
       "departure_date": "2026-03-21",
       "return_date": "2026-04-06",
       "baseline_price_usd": 950,
-      "previous_price_usd": 1097,
-      "top_min_usd": 1102,
-      "delta_vs_last_round_usd": 5,
-      "delta_vs_first_round_usd": 152,
+      "previous_price_usd": 1102,
+      "top_min_usd": 1179,
+      "delta_vs_last_round_usd": 77,
+      "delta_vs_first_round_usd": 229,
       "top_flights_item_count": 3,
       "status": "ok"
     },
@@ -393,7 +393,7 @@
       "top_min_usd": 842,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 248,
-      "top_flights_item_count": 4,
+      "top_flights_item_count": 5,
       "status": "ok"
     },
     {
@@ -412,19 +412,19 @@
       "return_date": "2026-04-09",
       "baseline_price_usd": 656,
       "previous_price_usd": 656,
-      "top_min_usd": 656,
-      "delta_vs_last_round_usd": 0,
-      "delta_vs_first_round_usd": 0,
-      "top_flights_item_count": 5,
+      "top_min_usd": 706,
+      "delta_vs_last_round_usd": 50,
+      "delta_vs_first_round_usd": 50,
+      "top_flights_item_count": 4,
       "status": "ok"
     }
   ],
   "summary": {
     "row_count": 38,
     "min": 500,
-    "median": 677.5,
-    "mean": 820.74,
-    "max": 1628
+    "median": 679.5,
+    "mean": 818,
+    "max": 1642
   },
   "target": {
     "departure_date": "2026-03-12",
@@ -479,7 +479,7 @@
       "top_min_usd": 560,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 0,
-      "top_flights_item_count": 5,
+      "top_flights_item_count": 4,
       "status": "ok"
     },
     {
@@ -490,14 +490,14 @@
       "top_min_usd": 560,
       "delta_vs_last_round_usd": 0,
       "delta_vs_first_round_usd": 0,
-      "top_flights_item_count": 4,
+      "top_flights_item_count": 3,
       "status": "ok"
     }
   ],
   "delta_vs_last": {
-    "up": 1,
-    "down": 6,
-    "flat": 31
+    "up": 5,
+    "down": 4,
+    "flat": 29
   },
   "query_window": {
     "mode": "auto",
@@ -507,6 +507,6 @@
     "end_date": "2026-03-24",
     "window_days": 36
   },
-  "generated_at": "2026-02-17T09:57:25.220Z",
+  "generated_at": "2026-02-17T15:58:51.051Z",
   "source": "http-rpc"
 }
